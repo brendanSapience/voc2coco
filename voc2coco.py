@@ -48,10 +48,10 @@ def get_filename_as_int(filename):
 
 def get_categories(xml_files):
     """Generate category name to id mapping from a list of xml files.
-    
+
     Arguments:
         xml_files {list} -- A list of xml file paths.
-    
+
     Returns:
         dict -- category name to id mapping.
     """
@@ -105,10 +105,19 @@ def convert(xml_files, json_file):
                 categories[category] = new_id
             category_id = categories[category]
             bndbox = get_and_check(obj, "bndbox", 1)
-            xmin = int(get_and_check(bndbox, "xmin", 1).text) - 1
-            ymin = int(get_and_check(bndbox, "ymin", 1).text) - 1
-            xmax = int(get_and_check(bndbox, "xmax", 1).text)
-            ymax = int(get_and_check(bndbox, "ymax", 1).text)
+
+
+
+            #print("DEBUG: "+str(round(get_and_check(bndbox, "xmin", 1),0))
+            xmin = int(round(float(get_and_check(bndbox, "xmin", 1).text),0))
+            ymin = int(round(float(get_and_check(bndbox, "ymin", 1).text),0))
+            xmax = int(round(float(get_and_check(bndbox, "xmax", 1).text),0))
+            ymax = int(round(float(get_and_check(bndbox, "ymax", 1).text),0))
+            
+            #xmin = int(get_and_check(bndbox, "xmin", 1).text) - 1
+            #ymin = int(get_and_check(bndbox, "ymin", 1).text) - 1
+            #xmax = int(get_and_check(bndbox, "xmax", 1).text)
+            #ymax = int(get_and_check(bndbox, "ymax", 1).text)
             assert xmax > xmin
             assert ymax > ymin
             o_width = abs(xmax - xmin)
